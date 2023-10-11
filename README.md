@@ -17,11 +17,11 @@ This is a single-page React application for viewing documentation pages. Users c
 1. **Clone the repository**:
    
    ```bash
-   git clone [your-repository-url]
-   cd [repository-name]
+   git clone https://github.com/Danial-11/Documentation-Viewer
+   cd Documentation-Viewer
     ```
 
-## installimg dependencies
+2. **Install dependencies**:
 
    ```bash
    npm install
