@@ -3,10 +3,10 @@ import PageContent from "./Components/PageView/PageContent";
 import SearchBar from "./Components/SearchBar/SearchBar";
 
 function App() {
-    const [showPageContent, setShowPageContent] = useState(false);
-    const [search, setSearch] = useState('');
+    const [showPageContent, setShowPageContent] = useState<boolean>(false);
+    const [search, setSearch] = useState<string>('');
 
-    const handleSearch = (searchValue) => {
+    const handleSearch = (searchValue: string) => {
         setSearch(searchValue);
         setShowPageContent(true);
     };

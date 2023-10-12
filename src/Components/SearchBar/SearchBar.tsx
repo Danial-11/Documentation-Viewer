@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -34,10 +34,13 @@ const SearchButton = styled.button`
     cursor: pointer;
     background-color: #4183C4;
 `;
+interface SearchBarProps {
+    onSearch: (value: string) => void;
+}
 
-const SearchBar = ({ onSearch }) => {
-    const [search, setSearch] = React.useState('');
-    const [error, setError] = React.useState('');
+const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
+    const [search, setSearch] = React.useState<string>('');
+    const [error, setError] = React.useState<string>('');
 
     return (
         <>

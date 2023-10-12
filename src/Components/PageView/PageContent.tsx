@@ -28,7 +28,7 @@ const MenuHeader = styled.h2`
     border-bottom: 1px solid #ccc;
 `;
 
-const MenuItem = styled.div`
+const MenuItem = styled.div<{ isSelected: boolean }>`
     padding: 5px 10px;
     cursor: pointer;
     background-color: ${({ isSelected }) => (isSelected ? "#f7f7f7" : "transparent")};
@@ -65,10 +65,20 @@ const ErrorMessage = styled.div`
     flex: 1;
 `;
 
-const PageContent = ({ apiUrl }) => {
-    const [pages, setPages] = useState([]);
-    const [selectedPage, setSelectedPage] = useState(null);
-    const [error, setError ] = useState('');
+interface PageProps {
+    apiUrl: string;
+}
+
+interface Page {
+    title: string;
+    bodyText: string;
+}
+
+const PageContent: React.FC<PageProps> = ({ apiUrl }) => {
+    const [pages, setPages] = useState<Page[]>([]);
+    const [selectedPage, setSelectedPage] = useState<Page | null>(null);
+    const [error, setError ] = useState<string>('');
+    
     useEffect(() => {
         async function fetchData() {
             try {
@@ -93,26 +103,27 @@ const PageContent = ({ apiUrl }) => {
         <MainContainer>
             <Container>
             { error ? <ErrorMessage>{error}</ErrorMessage> : (
-                <><MenuPanel>
-                    <MenuHeader>Menu</MenuHeader>
-                    {pages.map((page) => (
-                        <MenuItem 
-                            key={page.title} 
-                            onClick={() => setSelectedPage(page)} 
-                            isSelected={selectedPage === page}
-                        >
-                            {page.title}
-                        </MenuItem>
-                    ))}
-                </MenuPanel>
-                <ContentContainer>
-                    <TitleBox>
-                        {selectedPage && selectedPage.title}
-                    </TitleBox>
-                    <ContentBox>
-                        {selectedPage && <ReactMarkdown>{selectedPage.bodyText}</ReactMarkdown>}
-                    </ContentBox>
-                </ContentContainer>
+                <>
+                    <MenuPanel>
+                        <MenuHeader>Menu</MenuHeader>
+                        {pages.map((page) => (
+                            <MenuItem 
+                                key={page.title} 
+                                onClick={() => setSelectedPage(page)} 
+                                isSelected={selectedPage === page}
+                            >
+                                {page.title}
+                            </MenuItem>
+                        ))}
+                    </MenuPanel>
+                    <ContentContainer>
+                        <TitleBox>
+                            {selectedPage && selectedPage.title}
+                        </TitleBox>
+                        <ContentBox>
+                            {selectedPage && <ReactMarkdown>{selectedPage.bodyText}</ReactMarkdown>}
+                        </ContentBox>
+                    </ContentContainer>
                 </>
             )}
             </Container>
